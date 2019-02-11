@@ -21,3 +21,6 @@ grid_search.py
 ## Вспомогательный код
 utils.py
 mixins.py
+
+## Notebook автоматического подбора параметров с помощью grid search
+hyper_opt.ipynb
