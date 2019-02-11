@@ -74,7 +74,12 @@ class PLSALDAHyperOptimizer(HyperOptimizerMixin):
 
                 est.set_params(**combo)
 
-                est.fit(corpus_train)
+                if algotype == 'lda':
+                    est.fit(corpus_train)
+                else:
+                    num_groups = df.group.nunique()
+                    est.fit(corpus_train, num_groups)
+
                 corpus_test['recs'] = est.predict(corpus_test.user.values)
 
                 corpus_test['group'] = corpus_test.group.apply(lambda x: [item[0] for item in x])
