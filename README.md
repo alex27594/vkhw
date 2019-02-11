@@ -15,7 +15,9 @@ metrics.py
 
 ## Алгоритмы для gridsearch-подбора гиперпараметров
 grid_search.py
-
+* **SVDHyperOptimizer** - gridsearch подбор параметров для MySVD
+* **PLSALDAHyperOptimizer** - gridsearch подбор параметров для MyPLSA и LDAAdapter
+ 
 ## Вспомогательный код
 utils.py
 mixins.py
