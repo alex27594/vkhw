@@ -94,10 +94,7 @@ class MyPLSA(MemorizedArrayRecommenderMixin, ArrayPredictorMixin, SetParameterMi
 
         counter = 0
         for i in range(self.max_num_steps):
-            print(counter)
             counter += 1
-            print('put_arr', self.put_arr)
-            print('ptg_arr', self.ptg_arr)
             for u in range(num_users):
                 row = [item[0] for item in inner_corpus_train[inner_corpus_train.user == u].group]
                 for g in row:
@@ -191,7 +188,6 @@ class MySVD(MemorizedArrayRecommenderMixin, ArrayPredictorMixin, SetParameterMix
         ex_gen = self._train_gen(inner_df_train, inner_df_neg_exs)
         exp_err_checker = SVDExpErrChecker(self.exp_coef, self.tol)
         for i in range(self.max_num_steps):
-            print(i)
             coords, val = next(ex_gen)
             prev_u = self.ut_arr[coords[0], :]
             prev_g = self.tg_arr[:, coords[1]]
