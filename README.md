@@ -24,3 +24,6 @@ mixins.py
 
 ## Notebook автоматического подбора параметров с помощью grid search
 hyper_opt.ipynb
+
+## Notebook сравнения метрик качества алгоритмов
+compare_algos.ipynb
