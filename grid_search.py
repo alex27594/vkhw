@@ -21,6 +21,7 @@ class SVDHyperOptimizer(HyperOptimizerMixin):
         params_combos = self._generate_params_combos(params)
         self.top = []
         for combo in params_combos:
+            print(combo)
             for train_index, test_index in skf.split(X=df, y=df.group):
                 df_train = df.iloc[train_index]
                 df_test = df.iloc[test_index]

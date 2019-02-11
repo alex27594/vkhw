@@ -15,12 +15,14 @@ class MemorizedArrayRecommenderMixin:
                          shape=shape)
 
     def make_random_mem_arr(self, dir_path, name, shape):
+        np.random.seed(50)
         mem_arr = self.make_zero_mem_arr(dir_path, name, shape)
         for i in range(shape[0]):
             mem_arr[i, :] = np.random.normal(0.5, 0.1, size=shape[1])
         return mem_arr
 
     def make_simplex_random_mem_arr(self, dir_path, name, shape):
+        np.random.seed(50)
         mem_arr = self.make_zero_mem_arr(dir_path, name, shape)
         for i in range(shape[0]):
             mem_arr[i, :] = np.random.dirichlet(np.array([1 for j in range(shape[1])]))
