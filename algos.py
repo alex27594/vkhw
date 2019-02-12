@@ -92,9 +92,7 @@ class MyPLSA(MemorizedArrayRecommenderMixin, ArrayPredictorMixin, SetParameterMi
         ptg_exp_err_checker = PLSAExpErrChecker(slice_size=self.slice_size, exp_coef=self.exp_coef, tol=self.tol)
 
 
-        counter = 0
         for i in range(self.max_num_steps):
-            counter += 1
             for u in range(num_users):
                 row = [item[0] for item in inner_corpus_train[inner_corpus_train.user == u].group]
                 for g in row:

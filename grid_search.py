@@ -84,7 +84,7 @@ class PLSALDAHyperOptimizer(HyperOptimizerMixin):
 
                 corpus_test['group'] = corpus_test.group.apply(lambda x: [item[0] for item in x])
 
-                scores.append(mean_average_precision(corpus_test.group.values, corpus_test.recs.value))
+                scores.append(mean_average_precision(corpus_test.group.values, corpus_test.recs.values))
 
             self.top.append(TopItem(combo=combo, score=sum(scores)/len(scores)))
 
