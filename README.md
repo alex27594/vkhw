@@ -26,4 +26,4 @@ mixins.py
 hyper_opt.ipynb
 
 ## Notebook сравнения метрик качества алгоритмов
-compare_algos.ipynb
+compare_algos.ipynb (в конце есть вывод)
