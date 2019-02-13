@@ -29,7 +29,7 @@ class LDAAdapter(SetParameterMixin):
         for user_id in users_ids:
             if user_id in self.dict_train:
                 user_train_groups = self.dict_train[user_id]
-                user_topics = np.array([item[1] for item in self.lda.get_document_topics(user_train_groups)]).reshape(
+                user_topics = np.array([item[1] for item in self.lda.get_document_topics(user_train_groups, minimum_probability=0)]).reshape(
                     (1, -1))
                 user_groups_weights = user_topics.dot(terms_topics)
                 user_train_groups = [item[0] for item in user_train_groups]
@@ -43,7 +43,7 @@ class LDAAdapter(SetParameterMixin):
 
 
 class MyPLSA(MemorizedArrayRecommenderMixin, ArrayPredictorMixin, SetParameterMixin):
-    def __init__(self, num_topics=10, K=10, max_num_steps=10, slice_size=100, exp_coef=0.5, tol=0.1):
+    def __init__(self, num_topics=10, K=10, max_num_steps=5, slice_size=100, exp_coef=0.5, tol=0.1):
         self.num_topics = num_topics
         self.K = K
         self.max_num_steps = max_num_steps
@@ -125,7 +125,7 @@ class MyPLSA(MemorizedArrayRecommenderMixin, ArrayPredictorMixin, SetParameterMi
 
 
 class MySVD(MemorizedArrayRecommenderMixin, ArrayPredictorMixin, SetParameterMixin):
-    def __init__(self, num_topics=10, K=10, max_num_steps=100_000_000, step_size=0.1, exp_coef=0.99, tol=0.001, random_state=50):
+    def __init__(self, num_topics=10, K=10, max_num_steps=100_000_000, step_size=0.1, exp_coef=0.9999, tol=0.00001, random_state=50):
         self.num_topics = num_topics
         self.K = K
         self.max_num_steps = max_num_steps

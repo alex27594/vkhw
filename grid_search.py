@@ -21,13 +21,17 @@ class SVDHyperOptimizer(HyperOptimizerMixin):
         params_combos = self._generate_params_combos(params)
         self.top = []
         for combo in params_combos:
+            print(combo)
             scores = []
+            counter = 0
             for train_index, test_index in skf.split(X=df, y=df.group):
+                print("{} split".format(counter))
+                counter += 1
                 df_train = df.iloc[train_index]
                 df_test = df.iloc[test_index]
 
                 df_neg = create_negative_examples(df=df, df_train=df_train,
-                                                  num_neg_exs=df_train.shape[0], random_state=self.random_state)
+                                                  num_neg_exs=10*df_train.shape[0], random_state=self.random_state)
                 svd = MySVD()
                 svd.set_params(**combo)
 
@@ -38,6 +42,10 @@ class SVDHyperOptimizer(HyperOptimizerMixin):
                 encoded_corpus_test = df_test.groupby("user").agg(lambda x: [svd_group_encoder_dict[item] for item in x]).reset_index()
 
                 encoded_corpus_test['recs'] = svd.predict(encoded_corpus_test.user.values)
+
+                score = mean_average_precision(encoded_corpus_test.group.values, encoded_corpus_test.recs.values)
+
+                print('score: {}'.format(score))
                 scores.append(mean_average_precision(encoded_corpus_test.group.values, encoded_corpus_test.recs.values))
 
             self.top.append(TopItem(combo=combo, score=sum(scores)/len(scores)))
@@ -59,8 +67,13 @@ class PLSALDAHyperOptimizer(HyperOptimizerMixin):
         transformer = Transformer()
         transformer.fit(df)
         for combo in params_combos:
+            print(combo)
             scores = []
+            counter = 0
             for train_index, test_index in skf.split(X=df, y=df.group):
+                print("{} split".format(counter))
+                counter += 1
+
                 df_train = df.iloc[train_index]
                 df_test = df.iloc[test_index]
 
@@ -84,7 +97,11 @@ class PLSALDAHyperOptimizer(HyperOptimizerMixin):
 
                 corpus_test['group'] = corpus_test.group.apply(lambda x: [item[0] for item in x])
 
-                scores.append(mean_average_precision(corpus_test.group.values, corpus_test.recs.values))
+                score = mean_average_precision(corpus_test.group.values, corpus_test.recs.values)
+
+                print('score: {}'.format(score))
+
+                scores.append(score)
 
             self.top.append(TopItem(combo=combo, score=sum(scores)/len(scores)))
 
